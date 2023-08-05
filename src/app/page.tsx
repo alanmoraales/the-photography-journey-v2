@@ -1,10 +1,18 @@
-import { css } from "../../styled-system/css";
+import notionService from "@/services/notion";
+import Link from "next/link";
 
-const Home = () => {
+const Home = async () => {
+  const posts = await notionService.getPosts();
   return (
-    <div className={css({ fontSize: "2xl", fontWeight: "bold" })}>
-      Welcome to the Photography Journey 🌅
-    </div>
+    <main>
+      <h4>Posts</h4>
+      {posts.map((post) => (
+        <Link href={`/posts/${post.slug}`} key={post.slug}>
+          <h2>{post.title}</h2>
+          <p>{post.summary}</p>
+        </Link>
+      ))}
+    </main>
   );
 };
 
