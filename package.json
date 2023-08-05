@@ -10,17 +10,21 @@
     "prepare": "panda codegen"
   },
   "dependencies": {
+    "@notionhq/client": "^2.2.10",
+    "@plaiceholder/next": "^3.0.0",
     "@types/node": "20.4.7",
     "@types/react": "18.2.18",
     "@types/react-dom": "18.2.7",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.12",
     "next": "13.4.12",
+    "plaiceholder": "^3.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "typescript": "5.1.6"
   },
   "devDependencies": {
-    "@pandacss/dev": "^0.9.0"
+    "@pandacss/dev": "^0.9.0",
+    "encoding": "^0.1.13"
   }
 }
