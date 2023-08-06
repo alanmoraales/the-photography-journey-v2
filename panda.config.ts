@@ -68,6 +68,12 @@ export default defineConfig({
     },
   },
 
+  globalCss: {
+    "html, body": {
+      backgroundColor: "background",
+    },
+  },
+
   // The output directory for your css system
   outdir: "styled-system",
 });
