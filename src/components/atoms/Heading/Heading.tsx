@@ -3,8 +3,12 @@ import { css, cva } from "@styled/css";
 import { JsxStyleProps } from "@styled/types";
 
 const headingLevels = {
+  h1: "h1",
+  h4: "h4",
+  blogH4: "blogH4",
   h5: "h5",
   h6: "h6",
+  blogH6: "blogH6",
 };
 
 interface IHeadingTagProps {
@@ -20,14 +24,19 @@ type THeadingLevelToTagMap = {
 };
 
 const headingTags: THeadingLevelToTagMap = {
+  h1: (props: IHeadingTagProps) => <h1 {...props} />,
+  h4: (props: IHeadingTagProps) => <h4 {...props} />,
+  blogH4: (props: IHeadingTagProps) => <h4 {...props} />,
   h5: (props: IHeadingTagProps) => <h5 {...props} />,
   h6: (props: IHeadingTagProps) => <h6 {...props} />,
+  blogH6: (props: IHeadingTagProps) => <h6 {...props} />,
 };
 
 const headingColors = {
   primary: "primary",
   normal: "normal",
-  gray: "gray",
+  light: "light",
+  inherit: "inherit",
 };
 
 const headingRecipes = cva({
@@ -37,11 +46,26 @@ const headingRecipes = cva({
   },
   variants: {
     level: {
+      h1: {
+        fontSize: "clamp(token(fontSizes.7xl), 3vw, token(fontSizes.8xl))",
+      },
+      h4: {
+        fontSize: "clamp(token(fontSizes.xl), 2vw, token(fontSizes.3xl))",
+      },
+      blogH4: {
+        fontSize: "clamp(token(fontSizes.2xl), 2vw, token(fontSizes.3xl))",
+        paddingTop: "lg",
+        paddingBottom: "md",
+      },
       h5: {
         fontSize: "clamp(token(fontSizes.lg), 2vw, token(fontSizes.2xl))",
       },
       h6: {
-        fontSize: "md",
+        fontSize: "clamp(token(fontSizes.md), 1vw, token(fontSizes.lg))",
+      },
+      blogH6: {
+        fontSize: "clamp(token(fontSizes.lg), 1vw, token(fontSizes.xl))",
+        paddingY: "md",
       },
     },
     color: {
@@ -51,8 +75,11 @@ const headingRecipes = cva({
       normal: {
         color: "black",
       },
-      gray: {
+      light: {
         color: "black.light",
+      },
+      inherit: {
+        color: "inherit",
       },
     },
   },
