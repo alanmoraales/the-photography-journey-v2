@@ -1,6 +1,8 @@
 import { BlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import Paragraph from "./blocks/Paragraph";
 import Image from "./blocks/Image";
+import GetHeading from "./blocks/Heading";
+import Bookmark from "./blocks/Bookmark";
 
 /**
  * Target block types for fist version:
@@ -12,6 +14,10 @@ import Image from "./blocks/Image";
 const supportedBlockTypes = {
   paragraph: Paragraph,
   image: Image,
+  heading_1: GetHeading({ level: 1 }),
+  heading_2: GetHeading({ level: 2 }),
+  heading_3: GetHeading({ level: 3 }),
+  bookmark: Bookmark,
 };
 
 interface INotionContentProps {

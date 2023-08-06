@@ -1,6 +1,7 @@
 import NextImage from "next/image";
 import { ImageBlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import { getPlaiceholder } from "plaiceholder";
+import { css } from "@styled/css";
 
 interface IImageProps {
   block: ImageBlockObjectResponse;
@@ -21,14 +22,21 @@ const Image = async ({ block }: IImageProps) => {
   } = await getPlaiceholder(imageBuffer, { size: 10 });
 
   return (
-    <NextImage
-      src={imageSrc}
-      alt={imageAlt}
-      width={width}
-      height={height}
-      blurDataURL={base64}
-      placeholder="blur"
-    />
+    <div
+      className={css({
+        paddingTop: "md",
+        paddingBottom: "lg",
+      })}
+    >
+      <NextImage
+        src={imageSrc}
+        alt={imageAlt}
+        width={width}
+        height={height}
+        blurDataURL={base64}
+        placeholder="blur"
+      />
+    </div>
   );
 };
 

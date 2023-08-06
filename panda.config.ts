@@ -12,7 +12,11 @@ export default defineConfig({
 
   // Useful for theme customization
   theme: {
-    extend: {},
+    extend: {
+      breakpoints: {
+        xsm: "480px",
+      },
+    },
     tokens: {
       colors: {
         primary: {
@@ -23,7 +27,10 @@ export default defineConfig({
           dark: { value: "#26103C" },
         },
         white: { value: "#F9F9F9" },
-        gray: { value: "#949494" },
+        gray: {
+          DEFAULT: { value: "#949494" },
+          rgb: { value: "148, 148, 148" },
+        },
         black: {
           DEFAULT: { value: "#1D1D1D" },
           light: { value: "#3A3A3A" },
@@ -51,6 +58,7 @@ export default defineConfig({
         light: { value: 300 },
         normal: { value: 400 },
         medium: { value: 500 },
+        bold: { value: 700 },
       },
       spacing: {
         xsm: { value: "4px" },
@@ -64,7 +72,14 @@ export default defineConfig({
     semanticTokens: {
       colors: {
         background: { value: "{colors.white}" },
+        divider: { value: "rgba({colors.gray.rgb}, 0.3)" },
       },
+    },
+  },
+
+  globalCss: {
+    "html, body": {
+      backgroundColor: "background",
     },
   },
 
