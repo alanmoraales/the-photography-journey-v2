@@ -26,6 +26,7 @@ const Navbar = () => {
           <Flex
             gap="lg"
             alignItems="center"
+            flexWrap="wrap"
             justifySelf={{
               base: "flex-start",
               sm: "flex-end",
