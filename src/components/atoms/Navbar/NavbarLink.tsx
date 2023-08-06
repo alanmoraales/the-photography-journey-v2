@@ -11,7 +11,7 @@ const NavbarLink = ({ children, href }: INavbarLinkProps) => (
   <Link href={href}>
     <Heading
       level="h6"
-      color="gray"
+      color="light"
       textDecoration="underline"
       _hover={{
         color: "primary",
