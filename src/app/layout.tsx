@@ -1,8 +1,9 @@
-import "./globals.css";
+import { Nunito_Sans, Roboto_Slab } from "next/font/google";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const nunitoSans = Nunito_Sans({ variable: "--font-nunito-sans" });
+const robotoSlab = Roboto_Slab({ variable: "--font-roboto-slab" });
 
 const metadata: Metadata = {
   title: "The Photography Journey",
@@ -13,7 +14,9 @@ const metadata: Metadata = {
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${nunitoSans.variable} ${robotoSlab.variable}`}>
+        {children}
+      </body>
     </html>
   );
 };
