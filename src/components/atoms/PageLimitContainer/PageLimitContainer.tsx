@@ -8,7 +8,6 @@ interface IPageLimitContainerProps {
 const PageLimitContainer = ({ children }: IPageLimitContainerProps) => (
   <div
     className={css({
-      paddingY: "xl",
       width: "90%",
       margin: "0 auto",
       maxWidth: "1024px",
