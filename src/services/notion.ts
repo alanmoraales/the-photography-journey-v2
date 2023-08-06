@@ -6,6 +6,21 @@ import {
 } from "@notionhq/client/build/src/api-endpoints";
 import { getPlaiceholder } from "plaiceholder";
 
+interface IPost {
+  id: string;
+  slug: string;
+  title: string;
+  summary: string;
+  language: string;
+  publishedAt: Date;
+  cover: {
+    src: string;
+    base64Placeholder: string;
+    width: number;
+    height: number;
+  };
+}
+
 const NotionService = () => {
   const notion = new NotionClient({
     auth: environmentService.notion.secret,
@@ -28,7 +43,7 @@ const NotionService = () => {
   const mapPageObjectToPost = async ({
     id,
     properties,
-  }: PageObjectResponse) => {
+  }: PageObjectResponse): Promise<IPost> => {
     // @ts-ignore Notion´s types are messed up
     const coverSrc = String(properties.Cover.files[0].name);
     const coverImageBuffer = await fetch(coverSrc).then(async (res) =>
@@ -94,4 +109,5 @@ const NotionService = () => {
 
 const notionService = NotionService();
 
+export type { IPost };
 export default notionService;
