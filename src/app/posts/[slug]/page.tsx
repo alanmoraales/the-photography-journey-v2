@@ -1,9 +1,10 @@
-import Flex from "@atoms/Flex";
-import Heading from "@atoms/Heading/Heading";
-import PageLimitContainer from "@atoms/PageLimitContainer/PageLimitContainer";
+import PageLimitContainer from "@atoms/PageLimitContainer";
 import NotionContent from "@organisms/NotionContent";
 import notionService from "@services/notion";
-import { css } from "@styled/css";
+import PostHeader from "@molecules/PostHeader/PostHeader";
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
+import FadeInAnimation from "@molecules/FadeInAnimation/FadeInAnimation";
 
 interface IPostPageParams {
   slug: string;
@@ -17,18 +18,17 @@ const PostPage = async ({ params }: IPostPageProps) => {
   const post = await notionService.getPostBySlug(params.slug);
   const contentBlocks = await notionService.getPostContentBlocks(post.id);
   return (
-    <div
-      className={css({
-        paddingY: "xl",
-      })}
-    >
-      <PageLimitContainer isBlogPost>
-        <Flex paddingBottom="lg">
-          <Heading level="h1">{post.title}</Heading>
-        </Flex>
-        <NotionContent blocks={contentBlocks} />
-      </PageLimitContainer>
-    </div>
+    <PageLimitContainer isBlogPost paddingY="xl">
+      <FadeInAnimation>
+        <PostHeader
+          title={post.title}
+          publishedAt={format(post.publishedAt, "PP", { locale: es })}
+        />
+        <main>
+          <NotionContent blocks={contentBlocks} />
+        </main>
+      </FadeInAnimation>
+    </PageLimitContainer>
   );
 };
 
