@@ -68,6 +68,9 @@ export default defineConfig({
         xl: { value: "64px" },
         "2xl": { value: "128px" },
       },
+      animations: {
+        fadeIn: { value: "fadeIn 0.3s ease-in-out" },
+      },
     },
     semanticTokens: {
       colors: {
@@ -80,6 +83,16 @@ export default defineConfig({
   globalCss: {
     "html, body": {
       backgroundColor: "background",
+    },
+    "@keyframes fadeIn": {
+      from: {
+        opacity: 0,
+        transform: "translateY(10px)",
+      },
+      to: {
+        opacity: 1,
+        transform: "translateY(0)",
+      },
     },
   },
 
