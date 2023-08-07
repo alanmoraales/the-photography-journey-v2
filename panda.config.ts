@@ -87,11 +87,11 @@ export default defineConfig({
     "@keyframes fadeIn": {
       from: {
         opacity: 0,
-        transform: "translateX(10px)",
+        transform: "translateY(10px)",
       },
       to: {
         opacity: 1,
-        transform: "translateX(0)",
+        transform: "translateY(0)",
       },
     },
   },
