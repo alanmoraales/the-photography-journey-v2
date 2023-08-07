@@ -23,7 +23,7 @@ const RecentPostsSection = ({ posts }: IRecentPostsSectionProps) => (
         <Fragment key={post.slug}>
           <PostCard
             {...post}
-            href={`/posts/${post.slug}`}
+            href={`/posts/${post.slug}?from=home`}
             key={post.slug}
             publishedAt={format(post.publishedAt, "PP", { locale: es })}
           />
