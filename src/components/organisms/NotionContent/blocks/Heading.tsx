@@ -4,7 +4,6 @@ import {
   Heading2BlockObjectResponse,
   Heading3BlockObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints";
-import { css } from "@styled/css";
 
 interface IGetHeadingProps {
   level: 1 | 2 | 3;
