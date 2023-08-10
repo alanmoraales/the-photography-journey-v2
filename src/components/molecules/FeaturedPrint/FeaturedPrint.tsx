@@ -43,19 +43,29 @@ const FeaturedPrint = ({
         })}
       >
         <Grid
-          gridTemplateColumns={{ base: "auto", xsm: "1fr auto" }}
+          gridTemplateColumns={{ base: "auto", xsm: "auto auto" }}
           gap="lg"
           width={{ base: "100%", xsm: "fit-content" }}
         >
-          <Image
-            src={cover.src}
-            width={cover.width}
-            height={cover.height}
-            alt={title}
-            placeholder="blur"
-            blurDataURL={cover.base64Placeholder}
-            style={{ maxHeight: "45vh", width: "auto" }}
-          />
+          <div
+            style={{
+              maxHeight: "45vh",
+              width: "auto",
+              aspectRatio: `${cover.width} / ${cover.height}`,
+            }}
+          >
+            <Image
+              src={cover.src}
+              width={cover.width}
+              height={cover.height}
+              alt={title}
+              placeholder="blur"
+              blurDataURL={cover.base64Placeholder}
+              style={{
+                objectFit: "contain",
+              }}
+            />
+          </div>
           <Flex
             flexDirection={{ base: "row", xsm: "column" }}
             justifyContent={{ base: "space-between", xsm: "flex-end" }}
