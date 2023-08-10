@@ -6,6 +6,20 @@ import {
 } from "@notionhq/client/build/src/api-endpoints";
 import { getPlaiceholder } from "plaiceholder";
 
+interface IPrint {
+  id: string;
+  slug: string;
+  title: string;
+  minPrice: number;
+  collectionName: string;
+  cover: {
+    src: string;
+    base64Placeholder: string;
+    width: number;
+    height: number;
+  };
+}
+
 interface IPost {
   id: string;
   slug: string;
@@ -38,6 +52,35 @@ const NotionService = () => {
     });
     const results = response.results as PageObjectResponse[];
     return results;
+  };
+
+  const queryPrintsDatabase = async () => {
+    const response = await notion.databases.query({
+      database_id: environmentService.notion.printsDatabaseId,
+      filter: {
+        property: "Featured",
+        checkbox: {
+          equals: false,
+        },
+      },
+    });
+    const results = response.results as PageObjectResponse[];
+    return results;
+  };
+
+  const queryFeaturedPrint = async () => {
+    const response = await notion.databases.query({
+      database_id: environmentService.notion.printsDatabaseId,
+      filter: {
+        property: "Featured",
+        checkbox: {
+          equals: true,
+        },
+      },
+    });
+    const results = response.results as PageObjectResponse[];
+    const featuredPrint = results[0];
+    return featuredPrint;
   };
 
   const mapPageObjectToPost = async ({
@@ -100,14 +143,60 @@ const NotionService = () => {
     return response.results as BlockObjectResponse[];
   };
 
+  const mapPageObjectToPrint = async ({
+    id,
+    properties,
+  }: PageObjectResponse): Promise<IPrint> => {
+    // @ts-ignore Notion´s types are messed up
+    const coverSrc = String(properties.Cover.files[0].name);
+    const coverImageBuffer = await fetch(coverSrc).then(async (res) =>
+      Buffer.from(await res.arrayBuffer())
+    );
+    const {
+      base64,
+      metadata: { width, height },
+    } = await getPlaiceholder(coverImageBuffer);
+    return {
+      id,
+      // @ts-ignore Notion´s types are messed up
+      slug: String(properties.Slug.rich_text[0].plain_text),
+      // @ts-ignore Notion´s types are messed up
+      title: String(properties.Name.title[0].plain_text),
+      // @ts-ignore Notion´s types are messed up
+      collectionName: String(properties.Collection.select.name),
+      // @ts-ignore Notion´s types are messed up
+      minPrice: Number(properties["Price-Min"].number),
+      cover: {
+        src: coverSrc,
+        base64Placeholder: base64,
+        width,
+        height,
+      },
+    };
+  };
+
+  const getPrints = async () => {
+    const results = await queryPrintsDatabase();
+    const posts = await Promise.all(results.map(mapPageObjectToPrint));
+    return posts;
+  };
+
+  const getFeaturedPrint = async () => {
+    const result = await queryFeaturedPrint();
+    const print = await mapPageObjectToPrint(result);
+    return print;
+  };
+
   return {
     getPosts,
     getPostBySlug,
     getPostContentBlocks,
+    getPrints,
+    getFeaturedPrint,
   };
 };
 
 const notionService = NotionService();
 
-export type { IPost };
+export type { IPost, IPrint };
 export default notionService;

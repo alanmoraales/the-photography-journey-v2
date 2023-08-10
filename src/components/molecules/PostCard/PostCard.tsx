@@ -26,30 +26,37 @@ const PostCard = ({
   publishedAt,
   cover,
 }: IPostCardProps) => (
-  <Grid
-    gap="md"
-    gridTemplateColumns={{ base: "auto", xsm: "35% auto" }}
-    alignItems="end"
-  >
-    <Image
-      src={cover.src}
-      width={cover.width}
-      height={cover.height}
-      alt={title}
-      blurDataURL={cover.base64Placeholder}
-      placeholder="blur"
-    />
-    <Grid gap="sm" height="fit-content">
-      <Heading level="h4">{title}</Heading>
-      <Body>{summary}</Body>
-      <Flex justifyContent="space-between" gap="lg">
-        <Body weight="light" color="light">
-          {publishedAt}
-        </Body>
-        <GoToLink href={href}>Seguir leyendo</GoToLink>
-      </Flex>
+  <Link href={href}>
+    <Grid
+      gap="md"
+      gridTemplateColumns={{ base: "auto", xsm: "35% auto" }}
+      alignItems="end"
+      _hover={{
+        "&:hover h6": {
+          color: "primary",
+        },
+      }}
+    >
+      <Image
+        src={cover.src}
+        width={cover.width}
+        height={cover.height}
+        alt={title}
+        blurDataURL={cover.base64Placeholder}
+        placeholder="blur"
+      />
+      <Grid gap="sm" height="fit-content">
+        <Heading level="h4">{title}</Heading>
+        <Body>{summary}</Body>
+        <Flex justifyContent="space-between" gap="lg">
+          <Body weight="light" color="light">
+            {publishedAt}
+          </Body>
+          <GoToLink renderAsATag={false}>Seguir leyendo</GoToLink>
+        </Flex>
+      </Grid>
     </Grid>
-  </Grid>
+  </Link>
 );
 
 export default PostCard;

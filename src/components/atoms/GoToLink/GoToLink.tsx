@@ -6,11 +6,16 @@ import GoToArrow from "./GoToArrow";
 
 interface IGoToLinkProps {
   children: ReactNode;
-  href: string;
+  href?: string;
+  renderAsATag?: boolean;
 }
 
-const GoToLink = ({ children, href }: IGoToLinkProps) => (
-  <Link href={href}>
+const GoToLink = ({
+  children,
+  href = "",
+  renderAsATag = true,
+}: IGoToLinkProps) => {
+  const baseGoToComponent = (
     <Flex
       gap="sm"
       alignItems="center"
@@ -22,7 +27,13 @@ const GoToLink = ({ children, href }: IGoToLinkProps) => (
       </Heading>
       <GoToArrow />
     </Flex>
-  </Link>
-);
+  );
+
+  return renderAsATag ? (
+    <Link href={href}>{baseGoToComponent}</Link>
+  ) : (
+    <>{baseGoToComponent}</>
+  );
+};
 
 export default GoToLink;

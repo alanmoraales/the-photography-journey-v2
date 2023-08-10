@@ -4,7 +4,9 @@ import withPlaiceholder from "@plaiceholder/next";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["alanmoraales.s3.amazonaws.com"],
+    domains: ["ik.imagekit.io"],
+    loader: "custom",
+    loaderFile: "./src/services/imageKitLoader.ts",
   },
 };
 
