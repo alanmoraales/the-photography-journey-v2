@@ -2,6 +2,7 @@ const EnvironmentService = () => ({
   notion: {
     secret: String(process.env.NOTION_SECRET_KEY),
     postsDatabaseId: String(process.env.NOTION_POSTS_DB_ID),
+    printsDatabaseId: String(process.env.NOTION_PRINTS_DB_ID),
   },
 });
 
