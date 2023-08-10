@@ -21,19 +21,19 @@ export default defineConfig({
       colors: {
         primary: {
           DEFAULT: {
-            value: "#812AD7",
+            value: "#972EFF",
           },
           light: { value: "#972EFF" },
           dark: { value: "#26103C" },
         },
-        white: { value: "#F9F9F9" },
+        white: { value: "#1D1D1D" },
         gray: {
           DEFAULT: { value: "#949494" },
           rgb: { value: "148, 148, 148" },
         },
         black: {
-          DEFAULT: { value: "#1D1D1D" },
-          light: { value: "#3A3A3A" },
+          DEFAULT: { value: "#F9F9F9" },
+          light: { value: "#FFFFFF" },
         },
       },
       fonts: {
