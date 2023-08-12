@@ -14,8 +14,9 @@ interface IRecentPostsSectionProps {
 
 const RecentPostsSection = ({ posts }: IRecentPostsSectionProps) => (
   <PreviewSectionTemplate
-    title="Lecturas recientes"
-    goToHref="/posts"
+    title="Lecturas"
+    // No index page yet
+    // goToHref="/posts"
     isHalfWidth
   >
     <Flex flexDirection="column" gap="lg">

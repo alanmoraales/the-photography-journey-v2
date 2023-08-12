@@ -9,8 +9,9 @@ interface IRecentPrintsSectionProps {
 const RecentPrintsSection = ({ prints }: IRecentPrintsSectionProps) => (
   <PreviewSectionTemplate
     title="Más fotos impresas"
-    goToHref="/prints"
-    goToLabel="Ver todas"
+    // No index page yet
+    // goToHref="/prints"
+    // goToLabel="Ver todas"
   >
     <PrintsCarousel prints={prints} />
   </PreviewSectionTemplate>
