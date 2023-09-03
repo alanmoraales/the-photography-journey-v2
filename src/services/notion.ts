@@ -18,6 +18,12 @@ interface IPrint {
     width: number;
     height: number;
   };
+  photos: {
+    src: string;
+    base64Placeholder: string;
+    width: number;
+    height: number;
+  }[];
 }
 
 interface IPost {
@@ -63,6 +69,14 @@ const NotionService = () => {
           equals: false,
         },
       },
+    });
+    const results = response.results as PageObjectResponse[];
+    return results;
+  };
+
+  const queryAllPrints = async () => {
+    const response = await notion.databases.query({
+      database_id: environmentService.notion.printsDatabaseId,
     });
     const results = response.results as PageObjectResponse[];
     return results;
@@ -172,6 +186,25 @@ const NotionService = () => {
         width,
         height,
       },
+      photos: await Promise.all(
+        // @ts-ignore Notion´s types are messed up
+        properties.Photos.files.map(async (file) => {
+          const imageSrc = String(file.name);
+          const coverImageBuffer = await fetch(imageSrc).then(async (res) =>
+            Buffer.from(await res.arrayBuffer())
+          );
+          const {
+            base64,
+            metadata: { width, height },
+          } = await getPlaiceholder(coverImageBuffer);
+          return {
+            src: imageSrc,
+            base64Placeholder: base64,
+            width,
+            height,
+          };
+        })
+      ),
     };
   };
 
@@ -187,12 +220,26 @@ const NotionService = () => {
     return print;
   };
 
+  const getPrintBySlug = async (slug: string) => {
+    const results = await queryAllPrints();
+    const print = results.find(
+      (result) =>
+        // @ts-ignore Notion´s types are messed up
+        String(result.properties.Slug.rich_text[0].plain_text) === slug
+    );
+    if (!print) {
+      throw new Error(`Print with slug ${slug} not found`);
+    }
+    return mapPageObjectToPrint(print);
+  };
+
   return {
     getPosts,
     getPostBySlug,
     getPostContentBlocks,
     getPrints,
     getFeaturedPrint,
+    getPrintBySlug,
   };
 };
 
