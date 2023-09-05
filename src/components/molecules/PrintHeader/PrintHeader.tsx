@@ -1,10 +1,10 @@
+import { Suspense } from "react";
 import Body from "@atoms/Body/Body";
 import Flex from "@atoms/Flex";
 import Heading from "@atoms/Heading";
 import GoBackLink, {
   GoBackLinkFallback,
 } from "@molecules/PostHeader/GoBackLink";
-import { Suspense } from "react";
 
 interface IPrintHeaderProps {
   title: string;
