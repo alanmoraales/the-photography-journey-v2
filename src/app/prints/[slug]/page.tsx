@@ -5,7 +5,6 @@ import FadeInAnimation from "@molecules/FadeInAnimation";
 import PrintHeader from "@molecules/PrintHeader/PrintHeader";
 import SnapCarousel from "@organisms/SnapCarousel/SnapCarousel";
 import notionService from "@services/notion";
-import { css } from "@styled/css";
 
 interface IPrintsPageParams {
   slug: string;
