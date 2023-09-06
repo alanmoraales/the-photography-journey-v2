@@ -6,6 +6,13 @@ import {
 } from "@notionhq/client/build/src/api-endpoints";
 import { getPlaiceholder } from "plaiceholder";
 
+interface IPrintPhoto {
+  src: string;
+  base64Placeholder: string;
+  width: number;
+  height: number;
+}
+
 interface IPrint {
   id: string;
   slug: string;
@@ -18,12 +25,7 @@ interface IPrint {
     width: number;
     height: number;
   };
-  photos: {
-    src: string;
-    base64Placeholder: string;
-    width: number;
-    height: number;
-  }[];
+  photos: IPrintPhoto[];
 }
 
 interface IPost {
@@ -245,5 +247,5 @@ const NotionService = () => {
 
 const notionService = NotionService();
 
-export type { IPost, IPrint };
+export type { IPost, IPrint, IPrintPhoto };
 export default notionService;
