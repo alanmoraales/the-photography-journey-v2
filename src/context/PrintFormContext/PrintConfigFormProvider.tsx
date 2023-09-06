@@ -34,13 +34,11 @@ const PrintConfigFormProvider = ({
     },
     resolver: yupResolver(printConfigSchema),
   });
-  console.log(errors);
 
   const onSubmit = handleSubmit((printConfig) => {
     /**
      * @todo Implement WhatsApp redirect with config in the message
      */
-    console.log(printConfig);
   });
 
   const contextValue: IPrintConfigFormContext = {
