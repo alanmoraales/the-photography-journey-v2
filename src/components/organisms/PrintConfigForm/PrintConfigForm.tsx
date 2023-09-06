@@ -4,6 +4,7 @@ import Body from "@atoms/Body";
 import Flex from "@atoms/Flex";
 import Heading from "@atoms/Heading";
 import usePrintConfigFormContext from "@context/PrintFormContext";
+import PrintOptionRadioButton from "@molecules/PrintOptionRadioButton";
 
 const PrintConfigForm = () => {
   const { register, onSubmit } = usePrintConfigFormContext();
@@ -15,20 +16,17 @@ const PrintConfigForm = () => {
         <fieldset id="print-size-options">
           <Flex flexDirection="column" gap="sm">
             <Body>1. Tamaño de impresión</Body>
-            <input
-              type="radio"
-              value="6x4"
-              id="6x4"
+            <PrintOptionRadioButton
+              value="4x6"
+              label="4x6 pulgadas"
+              secondaryLabel="(10x15 cm)"
               {...register("printSize")}
             />
-            <label htmlFor="6x4">6x4 pulgadas (15 x 10 cm)</label>
-            <input
-              type="radio"
+            <PrintOptionRadioButton
               value="custom"
-              id="custom"
+              label="Me interesa otro tamaño*"
               {...register("printSize")}
             />
-            <label htmlFor="custom">Me interesa otro tamaño*</label>
             <Body size="sm" weight="light" fontStyle="italic">
               * Se hará una cotización personalizada de acuerdo al tamaño
               deseado.
@@ -39,20 +37,18 @@ const PrintConfigForm = () => {
           <Body>2. ¿Deseas agregar un marco?</Body>
           <fieldset id="wants-frame">
             <Flex flexDirection="column" gap="sm">
-              <input
-                type="radio"
+              <PrintOptionRadioButton
                 value="without-frame"
-                id="without-frame"
+                label="Sin marco"
+                rightText="$150 MXN"
                 {...register("wantsFrame")}
               />
-              <label htmlFor="without-frame">Sin marco</label>
-              <input
-                type="radio"
+              <PrintOptionRadioButton
                 value="with-frame"
-                id="with-frame"
+                label="Con marco"
+                rightText="$280 MXN"
                 {...register("wantsFrame")}
               />
-              <label htmlFor="with-frame">Con marco</label>
             </Flex>
           </fieldset>
         </Flex>
@@ -60,20 +56,21 @@ const PrintConfigForm = () => {
           <Body>3. ¿Cómo haremos la entrega de tu pedido?</Body>
           <fieldset id="shipment-type">
             <Flex flexDirection="column" gap="sm">
-              <input
-                type="radio"
+              <PrintOptionRadioButton
                 value="delivery-point"
-                id="delivery-point"
+                label="Punto de entrega"
+                rightText="Gratis"
                 {...register("shipmentType")}
               />
-              <label htmlFor="delivery-point">Punto de entrega</label>
-              <input
-                type="radio"
+              <PrintOptionRadioButton
                 value="home-delivery"
-                id="home-delivery"
+                label="A domicilio"
+                rightText="+ Envío**"
                 {...register("shipmentType")}
               />
-              <label htmlFor="home-delivery">A domicilio</label>
+              <Body size="sm" weight="light" fontStyle="italic">
+                ** Los precios de envío se cotizan según la distancia.
+              </Body>
             </Flex>
           </fieldset>
         </Flex>
