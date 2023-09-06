@@ -29,6 +29,9 @@ const bodyRecipes = cva({
       light: {
         color: "black.light",
       },
+      inherit: {
+        color: "inherit",
+      },
     },
     weight: {
       normal: {
@@ -50,6 +53,7 @@ const bodyColors = {
   primary: "primary",
   normal: "normal",
   light: "light",
+  inherit: "inherit",
 };
 
 const bodyWeights = {
