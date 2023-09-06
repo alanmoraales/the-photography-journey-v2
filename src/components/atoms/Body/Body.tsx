@@ -15,6 +15,9 @@ const bodyRecipes = cva({
       blog: {
         fontSize: "clamp(token(fontSizes.lg), 1vw, token(fontSizes.2xl))",
       },
+      sm: {
+        fontSize: "sm",
+      },
     },
     color: {
       primary: {
@@ -57,6 +60,7 @@ const bodyWeights = {
 const bodySizes = {
   normal: "normal",
   blog: "blog",
+  sm: "sm",
 };
 
 interface IBodyProps extends JsxStyleProps {
