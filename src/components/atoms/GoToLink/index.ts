@@ -1,1 +1,3 @@
-export { default } from "./GoToLink";
+import GoToLink from "./GoToLink";
+
+export default GoToLink;

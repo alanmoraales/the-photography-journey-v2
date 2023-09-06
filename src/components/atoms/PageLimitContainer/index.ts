@@ -1,1 +1,3 @@
-export { default } from "./PageLimitContainer";
+import PageLimitContainer from "./PageLimitContainer";
+
+export default PageLimitContainer;
