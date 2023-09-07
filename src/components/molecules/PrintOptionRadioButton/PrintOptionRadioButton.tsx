@@ -26,7 +26,6 @@ const PrintOptionRadioButton = forwardRef<
     { value, label, secondaryLabel = "", rightText = "", ...inputProps },
     ref
   ) => {
-    console.log({ inputProps });
     return (
       <label htmlFor={value}>
         <div
@@ -61,25 +60,25 @@ const PrintOptionRadioButton = forwardRef<
               className={css({
                 WebkitAppearance: "none",
                 appearance: "none",
-                backgroundColor: "#fff",
+                backgroundColor: "token(colors.white)",
                 margin: 0,
                 font: "inherit",
-                color: "token(colors.gray)",
+                color: "currentColor",
                 width: "16px",
                 height: "16px",
-                border: "1px solid token(colors.gray)",
+                border: "1px solid currentColor",
                 borderRadius: "50%",
                 display: "grid",
                 placeContent: "center",
                 "&::before": {
-                  content: "",
-                  width: "14px",
-                  height: "14px",
+                  content: '""',
+                  display: "block",
+                  width: "12px",
+                  height: "12px",
                   borderRadius: "50%",
-                  transform: "scale(1)",
+                  transform: "scale(0)",
                   transition: "120ms transform ease-in-out",
-                  boxShadow: "inset 1em 1em  token(colors.primary.light)",
-                  zIndex: 8,
+                  boxShadow: "inset 1em 1em token(colors.primary.light)",
                 },
                 "&:checked::before": {
                   transform: "scale(1)",
