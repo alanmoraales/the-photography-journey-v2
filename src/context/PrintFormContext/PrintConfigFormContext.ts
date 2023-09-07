@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext } from "react";
-import { UseFormRegister } from "react-hook-form";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
 
 interface IPrintConfigFormValues {
   printSize: string;
@@ -12,6 +12,7 @@ interface IPrintConfigFormValues {
 interface IPrintConfigFormContext {
   onSubmit: () => void;
   register: UseFormRegister<IPrintConfigFormValues>;
+  errors: FieldErrors<IPrintConfigFormValues>;
 }
 
 const PrintConfigFormContext = createContext<

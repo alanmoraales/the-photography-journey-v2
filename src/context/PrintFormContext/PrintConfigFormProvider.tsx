@@ -44,6 +44,7 @@ const PrintConfigFormProvider = ({
   const contextValue: IPrintConfigFormContext = {
     onSubmit,
     register,
+    errors,
   };
   return (
     <PrintConfigFormContext.Provider value={contextValue}>
