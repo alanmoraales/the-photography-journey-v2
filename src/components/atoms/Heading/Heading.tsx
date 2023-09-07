@@ -37,6 +37,7 @@ const headingColors = {
   normal: "normal",
   light: "light",
   inherit: "inherit",
+  white: "white",
 };
 
 const headingRecipes = cva({
@@ -80,6 +81,9 @@ const headingRecipes = cva({
       },
       inherit: {
         color: "inherit",
+      },
+      white: {
+        color: "white",
       },
     },
   },
