@@ -12,7 +12,7 @@ interface IPrintHeaderProps {
 }
 
 const PrintHeader = ({ title, collectionName }: IPrintHeaderProps) => (
-  <Flex flexDirection="column" gap="md" paddingBottom="xl">
+  <Flex flexDirection="column" gap="md">
     <Flex flexDirection="column" gap="sm">
       <Heading level="h4">{title}</Heading>
       <Body color="primary" weight="light" fontStyle="italic">
