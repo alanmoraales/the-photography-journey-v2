@@ -3,11 +3,13 @@
 import Body from "@atoms/Body";
 import Flex from "@atoms/Flex";
 import Heading from "@atoms/Heading";
+import When from "@atoms/When";
 import usePrintConfigFormContext from "@context/PrintFormContext";
 import PrintOptionRadioButton from "@molecules/PrintOptionRadioButton";
+import { css } from "@styled/css";
 
 const PrintConfigForm = () => {
-  const { register, onSubmit } = usePrintConfigFormContext();
+  const { register, onSubmit, errors } = usePrintConfigFormContext();
 
   return (
     <form onSubmit={onSubmit}>
@@ -27,6 +29,11 @@ const PrintConfigForm = () => {
               label="Me interesa otro tamaño*"
               {...register("printSize")}
             />
+            <When condition={Boolean(errors?.printSize)}>
+              <Body size="sm" fontStyle="italic" color="error">
+                {errors?.printSize?.message}
+              </Body>
+            </When>
             <Body size="sm" weight="light" fontStyle="italic">
               * Se hará una cotización personalizada de acuerdo al tamaño
               deseado.
@@ -49,6 +56,11 @@ const PrintConfigForm = () => {
                 rightText="$280 MXN"
                 {...register("wantsFrame")}
               />
+              <When condition={Boolean(errors?.wantsFrame)}>
+                <Body size="sm" fontStyle="italic" color="error">
+                  {errors?.wantsFrame?.message}
+                </Body>
+              </When>
             </Flex>
           </fieldset>
         </Flex>
@@ -68,13 +80,63 @@ const PrintConfigForm = () => {
                 rightText="+ Envío**"
                 {...register("shipmentType")}
               />
+              <When condition={Boolean(errors?.shipmentType)}>
+                <Body size="sm" fontStyle="italic" color="error">
+                  {errors?.shipmentType?.message}
+                </Body>
+              </When>
               <Body size="sm" weight="light" fontStyle="italic">
                 ** Los precios de envío se cotizan según la distancia.
               </Body>
             </Flex>
           </fieldset>
         </Flex>
-        <button type="submit">Ordenar</button>
+        <div
+          className={css({
+            position: {
+              base: "fixed",
+              md: "relative",
+            },
+            width: "100%",
+            bottom: {
+              base: "0",
+            },
+            left: {
+              base: "0",
+            },
+            paddingY: "20px",
+            background: "white",
+            boxShadow: {
+              base: "0 4px 30px rgba(0, 0, 0, 0.1)",
+              md: "none",
+            },
+            display: "grid",
+          })}
+        >
+          <button
+            type="submit"
+            className={css({
+              backgroundColor: "#25D366",
+              borderRadius: "10px",
+              padding: "10px 20px",
+              width: {
+                base: "90%",
+                md: "100%",
+              },
+              cursor: "pointer",
+              _hover: {
+                backgroundColor:
+                  "color-mix(in lch, #25D366, token(colors.white) 5%)",
+              },
+              justifySelf: "center",
+              boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
+            })}
+          >
+            <Heading level="h6" color="white">
+              Ordenar por $280 MXN
+            </Heading>
+          </button>
+        </div>
       </Flex>
     </form>
   );
