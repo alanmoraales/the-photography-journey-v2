@@ -6,6 +6,53 @@ import {
 } from "@notionhq/client/build/src/api-endpoints";
 import { getPlaiceholder } from "plaiceholder";
 
+interface IPrintSizes {
+  id: string;
+  displayNameInches: string;
+  displayNameCm: string;
+  prices: {
+    withFrame: number;
+    withoutFrame: number;
+  };
+}
+
+const printSizes: IPrintSizes[] = [
+  {
+    id: "6x4",
+    displayNameInches: "6x4",
+    displayNameCm: "15x10",
+    prices: {
+      withFrame: 110,
+      withoutFrame: 70,
+    },
+  },
+  {
+    id: "6x8",
+    displayNameInches: "6x8",
+    displayNameCm: "15x20",
+    prices: {
+      withFrame: 240,
+      withoutFrame: 100,
+    },
+  },
+  {
+    id: "11x14",
+    displayNameInches: "11x14",
+    displayNameCm: "28x36",
+    prices: {
+      withFrame: 715,
+      withoutFrame: 215,
+    },
+  },
+];
+
+interface IPrintPhoto {
+  src: string;
+  base64Placeholder: string;
+  width: number;
+  height: number;
+}
+
 interface IPrint {
   id: string;
   slug: string;
@@ -18,6 +65,9 @@ interface IPrint {
     width: number;
     height: number;
   };
+  photos: IPrintPhoto[];
+  availableSizes: IPrintSizes[];
+  postSlug?: string;
 }
 
 interface IPost {
@@ -63,6 +113,14 @@ const NotionService = () => {
           equals: false,
         },
       },
+    });
+    const results = response.results as PageObjectResponse[];
+    return results;
+  };
+
+  const queryAllPrints = async () => {
+    const response = await notion.databases.query({
+      database_id: environmentService.notion.printsDatabaseId,
     });
     const results = response.results as PageObjectResponse[];
     return results;
@@ -156,6 +214,16 @@ const NotionService = () => {
       base64,
       metadata: { width, height },
     } = await getPlaiceholder(coverImageBuffer);
+    // @ts-ignore Notion´s types are messed up
+    const availableSizesIds = properties["Sizes"].multi_select.map(
+      (size: any) => size.name
+    );
+    const availableSizes = printSizes.filter((size) =>
+      availableSizesIds.includes(size.id)
+    );
+    // printSizes is sorted by price, so the first element is the cheapest
+    const minPrice = availableSizes[0].prices.withoutFrame;
+
     return {
       id,
       // @ts-ignore Notion´s types are messed up
@@ -164,14 +232,38 @@ const NotionService = () => {
       title: String(properties.Name.title[0].plain_text),
       // @ts-ignore Notion´s types are messed up
       collectionName: String(properties.Collection.select.name),
-      // @ts-ignore Notion´s types are messed up
-      minPrice: Number(properties["Price-Min"].number),
+      minPrice,
       cover: {
         src: coverSrc,
         base64Placeholder: base64,
         width,
         height,
       },
+      photos: await Promise.all(
+        // @ts-ignore Notion´s types are messed up
+        properties.Photos.files.map(async (file) => {
+          const imageSrc = String(file.name);
+          const coverImageBuffer = await fetch(imageSrc).then(async (res) =>
+            Buffer.from(await res.arrayBuffer())
+          );
+          const {
+            base64,
+            metadata: { width, height },
+          } = await getPlaiceholder(coverImageBuffer);
+          return {
+            src: imageSrc,
+            base64Placeholder: base64,
+            width,
+            height,
+          };
+        })
+      ),
+      availableSizes,
+      // @ts-ignore Notion´s types are messed up
+      postSlug: properties["Post Slug"]?.rich_text[0]?.plain_text
+        ? // @ts-ignore Notion´s types are messed up
+          String(properties["Post Slug"]?.rich_text[0]?.plain_text)
+        : "",
     };
   };
 
@@ -187,16 +279,30 @@ const NotionService = () => {
     return print;
   };
 
+  const getPrintBySlug = async (slug: string) => {
+    const results = await queryAllPrints();
+    const print = results.find(
+      (result) =>
+        // @ts-ignore Notion´s types are messed up
+        String(result.properties.Slug.rich_text[0].plain_text) === slug
+    );
+    if (!print) {
+      throw new Error(`Print with slug ${slug} not found`);
+    }
+    return mapPageObjectToPrint(print);
+  };
+
   return {
     getPosts,
     getPostBySlug,
     getPostContentBlocks,
     getPrints,
     getFeaturedPrint,
+    getPrintBySlug,
   };
 };
 
 const notionService = NotionService();
 
-export type { IPost, IPrint };
+export type { IPost, IPrint, IPrintPhoto, IPrintSizes };
 export default notionService;

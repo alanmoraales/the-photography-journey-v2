@@ -22,7 +22,8 @@ const Navbar = () => {
             <Heading>The Photography Journey</Heading>
           </Flex>
         </Link>
-        <Flex
+        {/** No index pages yet */}
+        {/* <Flex
           gap="lg"
           alignItems="center"
           flexWrap="wrap"
@@ -38,7 +39,7 @@ const Navbar = () => {
           <NavbarLink href="/prints">Prints</NavbarLink>
           <NavbarLink href="/posts">Blog</NavbarLink>
           <NavbarLink href="/gallery">Gallery</NavbarLink>
-        </Flex>
+        </Flex> */}
       </Grid>
     </PageLimitContainer>
   );

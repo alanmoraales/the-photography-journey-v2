@@ -1,1 +1,3 @@
-export { default } from "./When";
+import When from "./When";
+
+export default When;

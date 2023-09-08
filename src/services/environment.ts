@@ -4,6 +4,9 @@ const EnvironmentService = () => ({
     postsDatabaseId: String(process.env.NOTION_POSTS_DB_ID),
     printsDatabaseId: String(process.env.NOTION_PRINTS_DB_ID),
   },
+  whatsapp: {
+    number: String(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER),
+  },
 });
 
 const environmentService = EnvironmentService();
