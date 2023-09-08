@@ -44,9 +44,13 @@ const PrintsPage = async ({ params }: IPrintsPageProps) => {
             </div>
             <div
               className={css({
-                display: { base: "flex", md: "grid" },
+                display: { base: "flex", xsm: "grid" },
                 gap: "lg",
-                gridTemplateColumns: { md: "60% 1fr" },
+                gridTemplateColumns: {
+                  xsm: "45% 1fr",
+                  md: "55% 1fr",
+                  lg: "60% 1fr",
+                },
                 flexDirection: "column",
               })}
             >
@@ -65,7 +69,10 @@ const PrintsPage = async ({ params }: IPrintsPageProps) => {
                     collectionName={print.collectionName}
                   />
                 </div>
-                <PrintConfigFormProvider>
+                <PrintConfigFormProvider
+                  availableSizes={print.availableSizes}
+                  printTitle={print.title}
+                >
                   <PrintConfigForm />
                 </PrintConfigFormProvider>
               </Flex>

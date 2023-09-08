@@ -9,7 +9,17 @@ import PrintOptionRadioButton from "@molecules/PrintOptionRadioButton";
 import { css } from "@styled/css";
 
 const PrintConfigForm = () => {
-  const { register, onSubmit, errors } = usePrintConfigFormContext();
+  const {
+    register,
+    onSubmit,
+    errors,
+    availableSizes,
+    hasSelectedPrintSize,
+    isCustomSize,
+    selectedPrintSize,
+    frameOptionPrice,
+    deliveryIsFree,
+  } = usePrintConfigFormContext();
 
   return (
     <form onSubmit={onSubmit}>
@@ -18,12 +28,15 @@ const PrintConfigForm = () => {
         <fieldset id="print-size-options">
           <Flex flexDirection="column" gap="sm">
             <Body>1. Tamaño de impresión</Body>
-            <PrintOptionRadioButton
-              value="4x6"
-              label="4x6 pulgadas"
-              secondaryLabel="(10x15 cm)"
-              {...register("printSize")}
-            />
+            {availableSizes.map((size) => (
+              <PrintOptionRadioButton
+                key={size.id}
+                value={size.id}
+                label={`${size.displayNameInches} pulgadas`}
+                secondaryLabel={`(${size.displayNameCm} cm)`}
+                {...register("printSize")}
+              />
+            ))}
             <PrintOptionRadioButton
               value="custom"
               label="Me interesa otro tamaño*"
@@ -47,13 +60,21 @@ const PrintConfigForm = () => {
               <PrintOptionRadioButton
                 value="without-frame"
                 label="Sin marco"
-                rightText="$150 MXN"
+                rightText={
+                  hasSelectedPrintSize && !isCustomSize
+                    ? `$${selectedPrintSize?.prices.withoutFrame} MXN`
+                    : ""
+                }
                 {...register("wantsFrame")}
               />
               <PrintOptionRadioButton
                 value="with-frame"
                 label="Con marco"
-                rightText="$280 MXN"
+                rightText={
+                  hasSelectedPrintSize && !isCustomSize
+                    ? `$${selectedPrintSize?.prices.withFrame} MXN`
+                    : ""
+                }
                 {...register("wantsFrame")}
               />
               <When condition={Boolean(errors?.wantsFrame)}>
@@ -69,8 +90,14 @@ const PrintConfigForm = () => {
           <fieldset id="shipment-type">
             <Flex flexDirection="column" gap="sm">
               <PrintOptionRadioButton
+                value="pick-up"
+                label="Recoger en tienda"
+                rightText="Gratis"
+                {...register("shipmentType")}
+              />
+              <PrintOptionRadioButton
                 value="delivery-point"
-                label="Punto de entrega"
+                label="Recoger en punto de entrega"
                 rightText="Gratis"
                 {...register("shipmentType")}
               />
@@ -130,11 +157,34 @@ const PrintConfigForm = () => {
               },
               justifySelf: "center",
               boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
+              _disabled: {
+                backgroundColor: "gray",
+                cursor: "not-allowed",
+              },
+              "&:disabled:hover": {
+                backgroundColor: "gray",
+              },
             })}
+            disabled={!hasSelectedPrintSize}
           >
-            <Heading level="h6" color="white">
-              Ordenar por $280 MXN
+            <Heading level="h6" color="white" display="inline-block">
+              {!hasSelectedPrintSize
+                ? "Selecciona un tamaño"
+                : isCustomSize
+                ? "Cotizar"
+                : `Ordenar por ($${frameOptionPrice} MXN)`}
             </Heading>
+            <When condition={!deliveryIsFree}>
+              <Body
+                size="sm"
+                weight="light"
+                color="white"
+                display="inline-block"
+                paddingLeft="sm"
+              >
+                + Envío
+              </Body>
+            </When>
           </button>
         </div>
       </Flex>
