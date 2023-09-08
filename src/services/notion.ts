@@ -67,6 +67,7 @@ interface IPrint {
   };
   photos: IPrintPhoto[];
   availableSizes: IPrintSizes[];
+  postSlug?: string;
 }
 
 interface IPost {
@@ -258,6 +259,11 @@ const NotionService = () => {
         })
       ),
       availableSizes,
+      // @ts-ignore Notion´s types are messed up
+      postSlug: properties["Post Slug"]?.rich_text[0]?.plain_text
+        ? // @ts-ignore Notion´s types are messed up
+          String(properties["Post Slug"]?.rich_text[0]?.plain_text)
+        : "",
     };
   };
 

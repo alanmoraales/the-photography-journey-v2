@@ -8,6 +8,10 @@ import Navbar from "@organisms/Navbar";
 import { PrintConfigFormProvider } from "@context/PrintFormContext";
 import notionService from "@services/notion";
 import { css } from "@styled/css";
+import NotionContent from "@organisms/NotionContent/NotionContent";
+import PostCard from "@molecules/PostCard/PostCard";
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
 
 interface IPrintsPageParams {
   slug: string;
@@ -19,6 +23,13 @@ interface IPrintsPageProps {
 
 const PrintsPage = async ({ params }: IPrintsPageProps) => {
   const print = await notionService.getPrintBySlug(params.slug);
+  const aboutPrintContentBlocks = await notionService.getPostContentBlocks(
+    print.id
+  );
+  let post;
+  if (print.postSlug) {
+    post = await notionService.getPostBySlug(print.postSlug);
+  }
 
   return (
     <Flex
@@ -54,11 +65,19 @@ const PrintsPage = async ({ params }: IPrintsPageProps) => {
                 flexDirection: "column",
               })}
             >
-              <Flex flexDirection="column" gap="lg">
+              <Flex flexDirection="column" gap="lg" height="fit-content">
                 <PrintPhotosCarousel
                   printTitle={print.title}
                   photos={print.photos}
                 />
+                <NotionContent blocks={aboutPrintContentBlocks} />
+                {post ? (
+                  <PostCard
+                    {...post}
+                    href={`/posts/${post?.slug}?from=print&printSlug=${print.slug}`}
+                    publishedAt={format(post.publishedAt, "PP", { locale: es })}
+                  />
+                ) : null}
               </Flex>
               <Flex flexDirection="column" gap="lg">
                 <div

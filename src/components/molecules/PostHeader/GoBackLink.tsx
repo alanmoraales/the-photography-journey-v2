@@ -11,6 +11,10 @@ const mapFromToProps = {
     href: "/",
     text: "Volver al inicio",
   },
+  print: {
+    href: "/prints",
+    text: "Volver a la tienda",
+  },
   default: {
     href: "/",
     text: "Explorar más contenido",
@@ -46,10 +50,12 @@ const GoBackLinkFallback = () => {
 const DynamicGoBackLink = () => {
   const searchParams = useSearchParams();
   const fromParam = searchParams.get("from");
+  const printSlugParam = searchParams.get("printSlug");
   // @ts-ignore - I know that the map can return null, that's why I have a default value
-  const props = mapFromToProps[fromParam] || mapFromToProps.default;
+  const { href, text } = mapFromToProps[fromParam] || mapFromToProps.default;
+  const hrefProp = printSlugParam ? `${href}/${printSlugParam}` : href;
 
-  return <GoBackLink {...props} />;
+  return <GoBackLink text={text} href={hrefProp} />;
 };
 
 export { GoBackLinkFallback };
