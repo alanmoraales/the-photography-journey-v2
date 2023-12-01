@@ -7,6 +7,9 @@ const EnvironmentService = () => ({
   whatsapp: {
     number: String(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER),
   },
+  mixpanel: {
+    token: String(process.env.NEXT_PUBLIC_MIXPANEL_TOKEN),
+  },
 });
 
 const environmentService = EnvironmentService();
