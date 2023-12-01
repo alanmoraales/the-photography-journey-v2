@@ -4,11 +4,13 @@ import RecentPostsSection from "@organisms/RecentPostsSection/RecentPostsSection
 import notionService from "@services/notion";
 import RecentPrintsSection from "@organisms/RecentPrintsSection/RecentPrintsSection";
 import FeaturedPrintSection from "@organisms/FeaturedPrintSection/FeaturedPrintSection";
+import mixpanelService from "@services/mixpanel";
 
 const Home = async () => {
   const posts = await notionService.getPosts();
   const prints = await notionService.getPrints();
   const featuredPrint = await notionService.getFeaturedPrint();
+  mixpanelService.trackEnterPage("Home");
 
   return (
     <Flex flexDirection="column" gap="xl" paddingY="xl">

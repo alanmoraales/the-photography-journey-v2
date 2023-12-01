@@ -7,6 +7,7 @@ import PrintConfigForm from "@organisms/PrintConfigForm";
 import Navbar from "@organisms/Navbar";
 import { PrintConfigFormProvider } from "@context/PrintFormContext";
 import notionService from "@services/notion";
+import mixpanelService from "@services/mixpanel";
 import { css } from "@styled/css";
 import NotionContent from "@organisms/NotionContent/NotionContent";
 import PostCard from "@molecules/PostCard/PostCard";
@@ -30,6 +31,7 @@ const PrintsPage = async ({ params }: IPrintsPageProps) => {
   if (print.postSlug) {
     post = await notionService.getPostBySlug(print.postSlug);
   }
+  mixpanelService.trackEnterPage("Print", { title: print.title });
 
   return (
     <Flex
