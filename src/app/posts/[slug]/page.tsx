@@ -2,9 +2,10 @@ import PageLimitContainer from "@atoms/PageLimitContainer";
 import NotionContent from "@organisms/NotionContent";
 import notionService from "@services/notion";
 import PostHeader from "@molecules/PostHeader/PostHeader";
+import FadeInAnimation from "@molecules/FadeInAnimation/FadeInAnimation";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
-import FadeInAnimation from "@molecules/FadeInAnimation/FadeInAnimation";
+import mixpanelService from "@services/mixpanel";
 
 interface IPostPageParams {
   slug: string;
@@ -17,6 +18,8 @@ interface IPostPageProps {
 const PostPage = async ({ params }: IPostPageProps) => {
   const post = await notionService.getPostBySlug(params.slug);
   const contentBlocks = await notionService.getPostContentBlocks(post.id);
+  mixpanelService.trackEnterPage("Post", { title: post.title });
+
   return (
     <PageLimitContainer isBlogPost paddingY="xl">
       <FadeInAnimation>

@@ -1,6 +1,7 @@
-import "./globals.css";
-import { Nunito_Sans, Roboto_Slab } from "next/font/google";
 import type { Metadata } from "next";
+import { Nunito_Sans, Roboto_Slab } from "next/font/google";
+import mixpanelService from "@services/mixpanel";
+import "./globals.css";
 
 const nunitoSans = Nunito_Sans({
   variable: "--font-nunito-sans",
@@ -18,6 +19,7 @@ const metadata: Metadata = {
 };
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
+  mixpanelService.init();
   return (
     <html lang="es" className={`${nunitoSans.variable} ${robotoSlab.variable}`}>
       <body>{children}</body>
