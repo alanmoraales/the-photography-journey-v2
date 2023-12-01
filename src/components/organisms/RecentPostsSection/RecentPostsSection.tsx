@@ -20,7 +20,7 @@ const RecentPostsSection = ({ posts }: IRecentPostsSectionProps) => (
     isHalfWidth
   >
     <Flex flexDirection="column" gap="lg">
-      {posts.slice(0, 2).map((post, index) => (
+      {posts.slice(0, 3).map((post, index) => (
         <Fragment key={post.slug}>
           <PostCard
             {...post}
