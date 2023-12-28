@@ -113,6 +113,12 @@ const NotionService = () => {
           equals: false,
         },
       },
+      sorts: [
+        {
+          property: "Order",
+          direction: "ascending",
+        },
+      ],
     });
     const results = response.results as PageObjectResponse[];
     return results;
@@ -269,8 +275,8 @@ const NotionService = () => {
 
   const getPrints = async () => {
     const results = await queryPrintsDatabase();
-    const posts = await Promise.all(results.map(mapPageObjectToPrint));
-    return posts;
+    const prints = await Promise.all(results.map(mapPageObjectToPrint));
+    return prints;
   };
 
   const getFeaturedPrint = async () => {
