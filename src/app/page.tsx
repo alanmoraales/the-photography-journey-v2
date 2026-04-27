@@ -8,8 +8,8 @@ import mixpanelService from "@services/mixpanel";
 
 const Home = async () => {
   const posts = await notionService.getPosts();
-  // const prints = await notionService.getPrints();
-  // const featuredPrint = await notionService.getFeaturedPrint();
+  const prints = await notionService.getPrints();
+  const featuredPrint = await notionService.getFeaturedPrint();
   mixpanelService.trackEnterPage("Home");
 
   return (
@@ -17,11 +17,8 @@ const Home = async () => {
       <Navbar />
       <main>
         <Flex flexDirection="column" gap="xl">
-          {/**
-           * Temporary disabled
-           */}
-          {/* <FeaturedPrintSection print={featuredPrint} /> */}
-          {/* <RecentPrintsSection prints={prints} /> */}
+          <FeaturedPrintSection print={featuredPrint} />
+          <RecentPrintsSection prints={prints} />
           <RecentPostsSection posts={posts} />
         </Flex>
       </main>
